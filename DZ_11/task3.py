@@ -22,33 +22,19 @@ class Bus:
         self.passenger_list = []
         self.seat_map = {}
 
-    def get_speed(self):
-        return self.speed
-
-    def set_speed(self, speed):
-        self.speed = speed
-
-    def get_max_seats(self):
-        return self.max_seats
-
-    def get_max_speed(self):
-        return self.max_speed
-
-    def set_max_speed(self, max_speed):
-        self.max_speed = max_speed
-
     def get_passenger_list(self):
         return self.passenger_list
 
     def set_passenger_list(self, passenger_list):
         self.passenger_list = list(passenger_list)
 
-    def get_free_seats(self):
+    @property
+    def free_seats(self):
         return self.max_seats - len(self.seat_map)
 
-    def board_passengers(self, passenger_list):
-        free_seats = self.get_free_seats()
-        for passenger in passenger_list:
+    def board_passengers(self, *passengers):
+        free_seats = self.free_seats
+        for passenger in passengers:
             if free_seats > 0:
                 if passenger not in self.passenger_list:
                     self.passenger_list.append(passenger)
@@ -62,11 +48,10 @@ class Bus:
         return self
 
     def alight_passengers(self, passenger):
-        free_seats = self.get_free_seats()
+        free_seats = self.free_seats
         if passenger in self.passenger_list:
             self.passenger_list.remove(passenger)
             free_seats += 1
-            print(f"Высадили пасажира с фимилией: {passenger}")
         else:
             return "В автобусе нет пасажира с такой фамилией"
 
@@ -91,7 +76,7 @@ print(b.speed)
 print(b.max_seats)
 print(b.max_speed)
 print(b.get_passenger_list())
-print(b.get_free_seats())
+print(b.free_seats)
 
 print(b.board_passengers(["Алексеева", "Кузнецов"]))
 b += "Михайлов"
