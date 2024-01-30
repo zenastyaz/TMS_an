@@ -38,7 +38,7 @@ class AnimalFactory:
         elif animal == 'cat':
             return Cat()
         else:
-            return "Unknown animal type"
+            raise ValueError("Unknown animal type")
 
 
 f = AnimalFactory()

@@ -7,13 +7,18 @@
 """
 
 
-def func():
+def func(nums):
     while True:
-        for n in [1, 2, 3]:
+        for n in nums:
             yield n
 
 
+user_input = input("Введите последовательность чисел: ")
+nums = []
+for n in user_input.split():
+    num = int(n)
+    nums.append(num)
 num = int(input(": "))
-f = func()
+f = func(nums)
 for _ in range(num):
     print(next(f), end="-")

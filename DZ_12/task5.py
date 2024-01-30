@@ -25,7 +25,7 @@ class Calculator:
         self.strategy = strategy
 
     def calculate(self, a, b):
-        if not isinstance(a, (int, float)):
+        if not isinstance(a, (int, float)) or not isinstance(b, (int, float)):
             return
         return self.strategy.execute(a, b)
 

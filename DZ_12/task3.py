@@ -14,8 +14,8 @@ bacon.
 
 
 class Pizza:
-    def __init__(self):
-        self.size = None
+    def __init__(self, size=None):
+        self.size = size
         self.cheese = False
         self.pepperoni = False
         self.mushrooms = False
@@ -60,7 +60,9 @@ class PizzaBuilder:
         return self
 
     def build(self):
-        return self.pizza
+        built_pizza = self.pizza
+        self.pizza = Pizza(self.pizza.size)
+        return built_pizza
 
 
 class PizzaDirector:
@@ -75,23 +77,18 @@ class PizzaDirector:
     def builder(self, builder):
         self._builder = builder
 
-    def make_pizza(self, size, cheese=False, pepperoni=False, mushrooms=False, onions=False, bacon=False):
-        self.builder.set_size(size)
-        if cheese:
-            self.builder.add_cheese()
-        if pepperoni:
-            self.builder.add_pepperoni()
-        if mushrooms:
-            self.builder.add_mushrooms()
-        if onions:
-            self.builder.add_onions()
-        if bacon:
-            self.builder.add_bacon()
-        return self.builder.build()
+    def make_pepperoni_pizza(self):
+        return self._builder.set_size("Large").add_cheese().add_pepperoni().build()
+
+    def make_veggie_pizza(self):
+        return self._builder.set_size("Medium").add_cheese().add_mushrooms().add_onions().build()
 
 
 builder = PizzaBuilder()
 director = PizzaDirector()
 director.builder = builder
-pizza = director.make_pizza(size="Large", cheese=True, pepperoni=True, mushrooms=True)
-print(pizza)
+pepperoni_pizza = director.make_pepperoni_pizza()
+veggie_pizza = director.make_veggie_pizza()
+
+print(pepperoni_pizza)
+print(veggie_pizza)
