@@ -1,0 +1,30 @@
+{% extends 'index.html' %}
+
+
+{% block content %}
+<div class="container mt-5">
+    <div class="list-item-container alert alert-secondary" role="alert">
+        <div class="text-center mb-4">
+            <form action="/show_books" method="get" class="mb-3">
+                <button type="submit" class="btn btn-outline-dark">Показать книги</button>
+            </form>
+
+            <form action="/add_book" method="get" class="mb-3">
+                <button type="submit" class="btn btn-outline-dark">Добавить книгу</button>
+            </form>
+
+            <form action="/update_book" method="get" class="mb-3">
+                <button type="submit" class="btn btn-outline-dark">Обновить книгу</button>
+            </form>
+
+            <form action="/delete_book" method="get" class="mb-3">
+                <button type="submit" class="btn btn-outline-dark">Удалить книгу</button>
+            </form>
+
+            <form action="/find_book" method="get" class="mb-3">
+                <button type="submit" class="btn btn-outline-dark">Найти книгу</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

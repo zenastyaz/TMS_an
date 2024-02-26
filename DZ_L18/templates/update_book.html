@@ -1,0 +1,32 @@
+{% extends 'index.html' %}
+
+{% block content %}
+{% if get_flashed_messages() %}
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+<div class="container mt-4">
+<h1 class="text-center mb-4">Обновление книги</h1>
+    <form action="/update_book" method="post">
+        <div class="mb-3">
+            <label for="new_name" class="form-label">Новое название книги:</label>
+            <input type="text" class="form-control" id="new_name" name="new_name" placeholder="Введите новое название книги" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="book_id" class="form-label">Выберите книгу:</label>
+            <select name="book_id" id="book_id" class="form-select">
+                <option value="">Выбрать книгу</option>
+                {% for book in books %}
+                    <option value="{{ book.id }}">{{ book.id }} - {{ book.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Обновить название</button>
+    </form>
+    <a href="/books" class="btn btn-secondary mt-3">Назад</a>
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="list-item-container alert alert-info" role="alert">
+        <div class="text-center mb-4">
+            <h2>{{ book.name }}</h2>
+            <p>Автор: {{ book.author.name }}</p>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center mb-4">
+        {% if prev_book_id %}
+            <a href="{{ url_for('f_show_book', book_id=prev_book_id) }}" class="btn btn-primary me-2 mt-3">Предыдущая книга</a>
+        {% endif %}
+        {% if next_book_id %}
+            <a href="{{ url_for('f_show_book', book_id=next_book_id) }}" class="btn btn-primary me-2 mt-3">Следующая книга</a>
+        {% endif %}
+    </div>
+    <div class="d-flex justify-content-center">
+        <a href="/show_books" class="btn btn-secondary mt-auto">Назад</a>
+    </div>
+</div>
+{% endblock %}

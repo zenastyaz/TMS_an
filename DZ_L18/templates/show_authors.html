@@ -1,0 +1,21 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Список авторов</h1>
+        <div class="list-item-container text-center mb-4">
+            {% if authors %}
+                <!-- Создают стилизованный список, где list-group применяется к самому списку,
+                а list-group-item — к каждому его элементу -->
+                <ul class="list-group">
+                    {% for author in authors %}
+                        <li class="list-group-item">{{ author.name }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="alert alert-warning" role="alert">Авторы не найдены.</p>
+            {% endif %}
+            <a href="/authors" class="btn btn-secondary mt-3">Назад</a>
+        </div>
+</div>
+{% endblock %}
