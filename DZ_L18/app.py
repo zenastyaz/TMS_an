@@ -31,7 +31,7 @@ def f_show_book(book_id):
     next_book_id = None
 
     for i, book in enumerate(books):
-        if book.id == book_id:  # Предполагается, что у книг есть уникальные идентификаторы
+        if book.id == book_id:
             current_book = book
             if i > 0:
                 prev_book_id = books[i-1].id
