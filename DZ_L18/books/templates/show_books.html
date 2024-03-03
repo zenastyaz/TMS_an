@@ -1,0 +1,35 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <style>
+    .favorite-star {
+        float: right; /* Выравнивает звездочку по правому краю */
+        align-items: center; /* Выравнивает элементы по центру по вертикали */
+    }
+
+    </style>
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Список книг</h1>
+        <div class="list-item-container text-center mb-4">
+            {% if books %}
+                <ul class="list-group">
+                    {% for book in books %}
+                        <li class="ist-group-item d-flex align-items-center">
+                            <a href="{{ url_for('books.f_show_book', book_id=book.id) }}"
+                               class="list-group-item list-group-item-action" style="color: black;">
+                                {{ book.name }} - {{ book.author.name }}
+                            </a>
+                            <a href="{{ url_for('books.f_add_my_book', book_id=book.id) }}" class="favorite-star">
+                                <i class="far fa-star"></i>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="alert alert-warning" role="alert">Книги не найдены.</p>
+            {% endif %}
+            <a href="{{ url_for('books.books') }}" class="btn btn-secondary mt-3">Назад</a>
+        </div>
+
+</div>
+{% endblock %}
