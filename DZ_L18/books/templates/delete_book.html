@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+
+{% block content %}
+{% if get_flashed_messages() %}
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+<div class="container mt-4">
+    <div class="list-item-container alert alert-light" role="alert">
+        <div class="text-center mb-4">
+            <h2>Удаление книги</h2>
+                <form action="{{ url_for('books.f_delete_book') }}" method="post">
+                    <div class="mb-3">
+                        <label for="book_id" class="form-label">Выберите книгу:</label>
+                        <select name="book_id" id="book_id" class="form-select">
+                            <option value="">Выбрать книгу</option>
+                            {% for book in books %}
+                                <option value="{{ book.id }}">{{ book.id }} - {{ book.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Удалить книгу</button>
+                </form>
+                <a href="{{ url_for('books.books') }}" class="btn btn-secondary mt-3">Назад</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

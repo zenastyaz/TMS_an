@@ -1,0 +1,26 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Список моих книг</h1>
+        <div class="list-item-container text-center mb-4">
+            {% if books %}
+                <ul class="list-group">
+                    {% for book in books %}
+                        <li class="list-group-item">
+                            {{ book.book.name }} - {{ book.book.author.name }}
+                            <a href="{{ url_for('books.f_delete_my_book', book_id=book.id) }}">
+                                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close">
+                                </button>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="alert alert-warning" role="alert">Книги не найдены.</p>
+            {% endif %}
+            <a href="{{ url_for('books.books') }}" class="btn btn-secondary mt-3">Назад</a>
+        </div>
+
+</div>
+{% endblock %}

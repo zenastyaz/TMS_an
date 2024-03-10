@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+
+{% block content %}
+{% if get_flashed_messages() %}
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+<div class="container mt-4">
+    <div class="list-item-container alert alert-light" role="alert">
+        <div class="text-center mb-4">
+            <h2>Удаление автора</h2>
+                <form action="{{ url_for('authors.f_delete_author') }}" method="post">
+                    <div class="mb-3">
+                        <label for="author_id" class="form-label">Выберите автора:</label>
+                        <select name="author_id" id="author_id" class="form-select">
+                            <option value="">Выбрать автора</option>
+                            {% for author in authors %}
+                                <option value="{{ author.id }}">{{ author.id }} - {{ author.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Удалить</button>
+                </form>
+                <a href="{{ url_for('authors.authors') }}" class="btn btn-secondary mt-3">Назад</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

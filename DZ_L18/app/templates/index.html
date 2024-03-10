@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Библиотека</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-5.3.3-dist/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+        <style>
+            .list-item-container {
+                max-width: 600px;
+                margin: auto;
+            }
+        </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <div class="navbar-nav mr-auto">
+                    <a href="{{ url_for('index') }}" class="nav-link">Главная</a>
+                </div>
+                <div class="navbar-nav ml-auto">
+                    {% if current_user.is_authenticated %}
+                        <span class="navbar-text">
+                            Привет, {{ current_user.email }}
+                        </span>
+                        <a href="{{ url_for('users.logout') }}" class="nav-link">Выход</a>
+                    {% else %}
+                        <a href="{{ url_for('users.f_authentication') }}" class="nav-link">Вход</a>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    {% block content %}
+        <div class="container">
+            <h1 class="text-center">Добро пожаловать в Книжную Библиотеку</h1>
+            <div class="d-flex justify-content-around mt-4">
+                <a href="{{ url_for('books.books') }}" class="btn btn-outline-dark">Посмотреть книги</a>
+                <a href="{{ url_for('authors.authors') }}" class="btn btn-outline-dark">Просмотреть авторов</a>
+            </div>
+        </div>
+    {% endblock %}
+</body>
+
+</html>
