@@ -1,9 +1,8 @@
 from users import users_b
-from users.func_bd import authorization, registration, new_email
+from users.func_bd import authorization, registration
 from flask import render_template, request, flash, redirect, url_for
-from utils import check_email
+from users.func_valid import validate_email_pass
 from flask_login import logout_user
-import re
 
 
 @users_b.route('/registration', methods=["POST", "GET"])
@@ -14,21 +13,7 @@ def f_registration():
         password = request.form.get('password')
         password2 = request.form.get('password2')
 
-        if not check_email(email):
-            errors.append("Некорректный адрес электронной почты.")
-        if new_email(email) is not None:
-            errors.append("Такой пользователь уже существует")
-
-        if password != password2:
-            errors.append('Ошибка: пароли не совпадают. Попробуйте снова.')
-        if len(password) < 6:
-            errors.append("Длина пароля должна быть не менее 6 символов.")
-        if not re.search('[a-z]', password):
-            errors.append("Пароль должен содержать хотя бы одну строчную букву.")
-        if not re.search("[A-Z]", password):
-            errors.append("Пароль должен содержать хотя бы одну заглавную букву.")
-        if not re.search("[0-9]", password):
-            errors.append("Пароль должен содержать хотя бы одну цифру.")
+        errors.extend(validate_email_pass(email, password, password2))
 
         if not errors:
             registration(email, password)

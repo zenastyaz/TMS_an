@@ -1,5 +1,8 @@
 from sqlalchemy.orm import Session
-from bd.models import Base, Author, Book
+from bd.database import db
+from books.model import Book
+from authors.model import Author
+from bd.database import Base
 
 from bd.connection import engine
 

@@ -1,8 +1,9 @@
 from books import books_b
-from books.func_bd import show_books, add_book, update_book, delete_book, find_book, show_my_books, add_my_book
-from authors.func_bd import show_authors
+from books.func_bd import (show_books, add_book, update_book, delete_book,
+                           find_book, show_my_books, add_my_book, delete_my_book)
 from flask import render_template, request, flash, redirect, url_for
 from flask_login import current_user
+from users.login_required import login_required
 
 
 @books_b.route('/books')
@@ -33,7 +34,8 @@ def f_show_book(book_id):
             break
 
     if current_book:
-        return render_template('show_book.html', book=current_book, prev_book_id=prev_book_id, next_book_id=next_book_id)
+        return render_template('show_book.html', book=current_book,
+                               prev_book_id=prev_book_id, next_book_id=next_book_id)
     else:
         return 'Книга не найдена', 404
 
@@ -42,6 +44,7 @@ def f_show_book(book_id):
 def f_add_book():
     name = None
     author_id = None
+    from authors.func_bd import show_authors
     authors = show_authors()
 
     if request.method == 'POST':
@@ -96,18 +99,25 @@ def f_find_book():
 
 
 @books_b.route('/my_books')
+@login_required
 def f_show_my_books():
-    if current_user.is_authenticated:
-        books = show_my_books()
-        return render_template('my_books.html', books=books)
-    return redirect(url_for('users.f_authentication'))
+    books = show_my_books()
+    return render_template('my_books.html', books=books)
 
 
 @books_b.route('/add_my_book/<int:book_id>')
+@login_required
 def f_add_my_book(book_id):
-    if current_user.is_authenticated:
-        add_my_book(current_user.id, book_id)
-        return redirect(url_for('books.f_show_my_books'))
-    return redirect(url_for('users.f_authentication'))
+    add_my_book(current_user.id, book_id)
+    return redirect(url_for('books.f_show_my_books'))
 
+
+
+@books_b.route('/delete_my_book/<int:book_id>')
+@login_required
+def f_delete_my_book(book_id):
+    deleted = delete_my_book(current_user.id, book_id)
+    if deleted:
+        updated_books = show_my_books()
+        return render_template('my_books.html', books=updated_books)
 

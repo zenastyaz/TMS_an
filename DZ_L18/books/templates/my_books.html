@@ -7,7 +7,13 @@
             {% if books %}
                 <ul class="list-group">
                     {% for book in books %}
-                        <li class="list-group-item">{{ book.book.name }} - {{ book.book.author.name }}</li>
+                        <li class="list-group-item">
+                            {{ book.book.name }} - {{ book.book.author.name }}
+                            <a href="{{ url_for('books.f_delete_my_book', book_id=book.id) }}">
+                                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close">
+                                </button>
+                            </a>
+                        </li>
                     {% endfor %}
                 </ul>
             {% else %}

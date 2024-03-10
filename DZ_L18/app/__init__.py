@@ -1,10 +1,15 @@
 from flask import Flask
-from bd.config import Config
+from app.config import Config
 
 
 app = Flask(__name__)
 
-app.secret_key = Config.PROD_SECRET_KEY
+app.config.from_object(Config)
+app.secret_key = app.config['PROD_SECRET_KEY']
+
+from bd.database import db
+
+db.init_app(app)
 
 from authors import authors_b
 
